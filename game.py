@@ -89,18 +89,7 @@ class MineGame(object):
 		for y in range(self.__SIZE):
 			line = ""
 			for x in range(self.__SIZE):
-				s = self.__status[y][x]
-				c = ""
-
-				if s == MS_COVER:
-					c = "_"
-				elif s == MS_SHOW:
-					if self.__data[y][x] == MD_MINE:
-						c = "X"
-					else:
-						c = "%d" % (self.__data[y][x])
-				elif s == MS_MINE_FLAG:
-					c = "F"
+				c = self.get_tile_status(x, y)
 
 				if x == cx and y == cy:
 					line += "[%s]" % (c)
@@ -108,6 +97,19 @@ class MineGame(object):
 					line += " %s " % (c)
 			print(line)
 
+	def get_tile_status(self, x, y):
+		s = self.__status[y][x]
+		c = ""
+		if s == MS_COVER:
+			c = "_"
+		elif s == MS_SHOW:
+			if self.__data[y][x] == MD_MINE:
+				c = "X"
+			else:
+				c = "%d" % (self.__data[y][x])
+		elif s == MS_MINE_FLAG:
+			c = "F"
+		return c
 
 	def __randomCell(self, _rate):
 		if random.random() < _rate:
